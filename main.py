@@ -8,8 +8,8 @@ from utils.draw_utils import draw_tracks, draw_metrics
 from evaluation.evaluation import compute_mock_metrics
 
 # --- Paths ---
-input_path = "people_tracking_project\\sample_videos\\test_video.mp4"
-output_path = "people_tracking_project\\results\\output_tracking.mp4"
+input_path = "sample_videos\\test_video.mp4"
+output_path = "results\\output_tracking.mp4"
 
 
 # --- Config ---
@@ -80,5 +80,4 @@ print(f"[✓] Tracking complete. Output saved to: {output_path}")
 print(f"[INFO] Average FPS: {frame_count / total_time:.2f}")
 print(f"[INFO] Total frames processed: {frame_count}")
 print(f"[INFO] Total time taken: {total_time:.2f} seconds")
-print(f"[INFO] MOTA: {mota:.3f}, IDF1: {idf1:.3f}")
 print("[INFO] Done.")
