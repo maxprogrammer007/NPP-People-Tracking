@@ -14,7 +14,7 @@ def compute_mock_metrics(tracks):
     return mota, idf1
 
 def evaluate_pipeline(config):
-    video_path = "people_tracking_project\\sample_videos\\test_video.mp4"
+    video_path = "sample_videos\\test_video.mp4"
     cap = cv2.VideoCapture(video_path)
 
     detector = YOLODetector(
@@ -52,7 +52,8 @@ def evaluate_pipeline(config):
 
     cap.release()
 
-    avg_fps = frame_count / total_time if total_time > 0 else 0
+    avg_fps = frame_count / total_time if total_time > 0 else 1e-3  # small value instead of zero
+
     mota, idf1 = compute_mock_metrics(all_tracks)
 
     return mota, idf1, avg_fps
