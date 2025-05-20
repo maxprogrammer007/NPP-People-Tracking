@@ -1,0 +1,10 @@
+Embedder,Optimizer,MOTA,IDF1,FPS
+mobilenetv2,qpso,1.0,0.78,29.91041623613453
+mobilenetv2,nsga,0.95,0.89,24.5
+mobilenetv2,mopso,0.95,0.89,24.5
+shufflenetv2,qpso,1.0,0.81,29.189361372187573
+shufflenetv2,nsga,0.95,0.89,24.5
+shufflenetv2,mopso,0.95,0.89,24.5
+resnet,qpso,1.0,0.78,27.970059394369873
+resnet,nsga,0.95,0.89,24.5
+resnet,mopso,0.95,0.89,24.5
