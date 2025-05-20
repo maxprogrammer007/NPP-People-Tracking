@@ -1,0 +1,10 @@
+{
+  "img_size": 640,
+  "conf_thresh": 0.5,
+  "nms_thresh": 0.45,
+  "alpha": 0.6,
+  "frame_skip": 1,
+  "MOTA": 0.95,
+  "IDF1": 0.89,
+  "FPS": 24.5
+}
