@@ -9,3 +9,5 @@ resnet,qpso,1.0,0.78,27.970059394369873
 resnet,nsga,0.95,0.89,24.5
 resnet,mopso,0.95,0.89,24.5
 mobilenetv2,qpso,1.0,0.81,42.12544538403357
+mobilenetv2,nsga,1.0,0.81,29.750737583246313
+mobilenetv2,mopso,0.9,0.81,29.99649917556738
