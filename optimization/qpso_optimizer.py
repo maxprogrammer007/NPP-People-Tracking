@@ -11,7 +11,7 @@ import csv
 
 
 
-def load_config(path="people_tracking_project\\optimization\\config.yaml"):
+def load_config(path="optimization\\config.yaml"):
     with open(path, "r") as f:
         return yaml.safe_load(f)
 
@@ -37,7 +37,7 @@ def quantize_config(config, allowed_values):
 
 import csv, os
 
-def log_to_csv(config, mota, idf1, fps, path="people_tracking_project\\results\\optimization_log.csv"):
+def log_to_csv(config, mota, idf1, fps, path="results\\optimization_log.csv"):
     file_exists = os.path.exists(path)
     with open(path, 'a', newline='') as f:
         fieldnames = list(config.keys()) + ['MOTA', 'IDF1', 'FPS']
