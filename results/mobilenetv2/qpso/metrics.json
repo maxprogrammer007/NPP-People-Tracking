@@ -3,8 +3,8 @@
   "conf_thresh": 0.2,
   "iou_thresh": 0.7,
   "skip_interval": 5,
-  "appearance_weight": 0.0,
+  "appearance_weight": 1.0,
   "MOTA": 1.0,
-  "IDF1": 0.78,
-  "FPS": 29.91041623613453
+  "IDF1": 0.81,
+  "FPS": 42.12544538403357
 }
