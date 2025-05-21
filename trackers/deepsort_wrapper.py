@@ -4,13 +4,14 @@ from deep_sort_realtime.deepsort_tracker import DeepSort
 
 class TrackByDetection:
     def __init__(self, conf_thresh=0.5, img_size=640, iou_thresh=0.5,
-                 skip_interval=1, appearance_weight=0.6):
+                 skip_interval=1, appearance_weight=0.6,device='cuda'):
         self.conf_thresh = conf_thresh
         self.img_size = img_size
         self.iou_thresh = iou_thresh
         self.skip_interval = skip_interval
         self.appearance_weight = appearance_weight
         self.frame_id = 0
+        self.device = device
 
         self.tracker = DeepSort(
             max_age=30,
