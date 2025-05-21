@@ -15,6 +15,8 @@ summary_file = os.path.join(results_dir, "summary_table.csv")
 embedders = ["mobilenetv2", "shufflenetv2", "resnet"]
 optimizers = ["qpso", "nsga", "mopso"]
 
+DEVICE = "cuda"  # ✅ force GPU usage
+
 def load_config_space(path=config_file):
     with open(path, "r") as f:
         return yaml.safe_load(f)
@@ -71,7 +73,7 @@ def plot_all(embedder, optimizer):
         print(f"[!] Failed to plot {embedder} + {optimizer}: {e}")
 
 def run_combo(embedder, optimizer):
-    print(f"\n▶ Running {embedder} + {optimizer}...")
+    print(f"\n▶ Running {embedder} + {optimizer} on {DEVICE}...")
 
     config_space = load_config_space()
     bounds, allowed_values = flatten_config_space(config_space)
@@ -88,7 +90,7 @@ def run_combo(embedder, optimizer):
         print(f"[✘] Unknown optimizer: {optimizer}")
         return
 
-    mota, idf1, fps = evaluate_pipeline(best_config)
+    mota, idf1, fps = evaluate_pipeline(best_config, device=DEVICE)
     result = {**best_config, "MOTA": mota, "IDF1": idf1, "FPS": fps}
     save_metrics(result, embedder, optimizer)
     plot_all(embedder, optimizer)
