@@ -1,10 +1,10 @@
 {
   "img_size": 640,
   "conf_thresh": 0.2,
-  "iou_thresh": 0.7,
+  "iou_thresh": 0.3,
   "skip_interval": 5,
   "appearance_weight": 1.0,
   "MOTA": 1.0,
   "IDF1": 0.81,
-  "FPS": 42.12544538403357
+  "FPS": 37.883
 }
