@@ -1,9 +1,6 @@
-# evaluation/evaluation.py
-
 import cv2
 import time
 from detectors.yolo_detector import YOLODetector
-# from trackers.bytetrack_wrapper import TrackByDetection
 from trackers.deepsort_wrapper import TrackByDetection  # if using Deep SORT
 
 def compute_mock_metrics(tracks):
@@ -13,14 +10,15 @@ def compute_mock_metrics(tracks):
     idf1 = 0.75 + 0.03 * (num_tracks % 3)  # mock value
     return mota, idf1
 
-def evaluate_pipeline(config):
-    video_path = "sample_videos\\test_video.mp4"
+def evaluate_pipeline(config, device="cuda"):
+    video_path = "sample_videos/test_video.mp4"
     cap = cv2.VideoCapture(video_path)
 
     detector = YOLODetector(
         model_name="yolov8n.pt",
         img_size=int(config["img_size"]),
-        conf_thresh=config["conf_thresh"]
+        conf_thresh=config["conf_thresh"],
+        device=device  # ✅ GPU-compatible
     )
 
     tracker = TrackByDetection(
@@ -28,11 +26,12 @@ def evaluate_pipeline(config):
         img_size=int(config["img_size"]),
         iou_thresh=config["iou_thresh"],
         skip_interval=int(config["skip_interval"]),
-        appearance_weight=config.get("appearance_weight", 0.6)  # if using Deep SORT
+        appearance_weight=config.get("appearance_weight", 0.6),
+        device=device  # ✅ GPU-compatible
     )
 
     frame_count = 0
-    total_time = 0
+    total_time = 0.0
     all_tracks = []
 
     while True:
@@ -52,8 +51,7 @@ def evaluate_pipeline(config):
 
     cap.release()
 
-    avg_fps = frame_count / total_time if total_time > 0 else 1e-3  # small value instead of zero
-
+    avg_fps = frame_count / total_time if total_time > 0 else 1e-3
     mota, idf1 = compute_mock_metrics(all_tracks)
 
-    return mota, idf1, avg_fps
+    return mota, idf1, round(avg_fps, 3)
