@@ -1,4 +1,3 @@
-# optimization/qpso_optimizer.py
 import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
@@ -9,20 +8,12 @@ from random import uniform
 from evaluation.evaluation import evaluate_pipeline
 import csv
 
-
-
-def load_config(path="optimization\\config.yaml"):
+def load_config(path="optimization/config.yaml"):
     with open(path, "r") as f:
         return yaml.safe_load(f)
 
 def sample_config(bounds):
-    config = {}
-    for k, v in bounds.items():
-        if isinstance(v, list):
-            config[k] = round(uniform(v[0], v[1]), 2)
-        else:
-            config[k] = v
-    return config
+    return {k: round(uniform(v[0], v[1]), 2) for k, v in bounds.items()}
 
 def quantize_config(config, allowed_values):
     quantized = {}
@@ -34,10 +25,8 @@ def quantize_config(config, allowed_values):
             quantized[key] = value
     return quantized
 
-
-import csv, os
-
-def log_to_csv(config, mota, idf1, fps, path="results\\optimization_log.csv"):
+def log_to_csv(config, mota, idf1, fps, path):
+    os.makedirs(os.path.dirname(path), exist_ok=True)
     file_exists = os.path.exists(path)
     with open(path, 'a', newline='') as f:
         fieldnames = list(config.keys()) + ['MOTA', 'IDF1', 'FPS']
@@ -48,20 +37,18 @@ def log_to_csv(config, mota, idf1, fps, path="results\\optimization_log.csv"):
         row.update({'MOTA': mota, 'IDF1': idf1, 'FPS': fps})
         writer.writerow(row)
 
-
-def qpso_optimize(bounds, allowed_values, num_particles=20, generations=15):
+def qpso_optimize(bounds, allowed_values, num_particles=20, generations=15, log_path="results/optimization_log.csv"):
     global_best = None
     global_best_score = (-1, -1, float("inf"))  # MOTA, IDF1, 1/FPS
-
     particles = [sample_config(bounds) for _ in range(num_particles)]
 
     for g in range(generations):
-        print(f"\n[Generation {g+1}]")
+        print(f"\n[QPSO] Generation {g+1}/{generations}")
         for i in tqdm(range(num_particles)):
             quantized = quantize_config(particles[i], allowed_values)
             mota, idf1, fps = evaluate_pipeline(quantized)
-            log_to_csv(quantized, mota, idf1, fps)
-            score = (mota, idf1, 1 / fps)
+            log_to_csv(quantized, mota, idf1, fps, path=log_path)
+            score = (mota, idf1, 1 / max(fps, 1e-3))
 
             if score > global_best_score:
                 global_best_score = score
@@ -74,7 +61,7 @@ def qpso_optimize(bounds, allowed_values, num_particles=20, generations=15):
                 for k in bounds
             }
 
-    print("\n[✓] Best Config Found:")
+    print("\n[✓] Best QPSO Config Found:")
     print(global_best)
     print("Score (MOTA, IDF1, 1/FPS):", global_best_score)
 
