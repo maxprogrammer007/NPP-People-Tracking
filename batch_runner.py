@@ -6,7 +6,6 @@ from optimization.qpso_optimizer import qpso_optimize
 from optimization.nsga_optimizer import run_nsga
 from optimization.mopso_optimizer import run_mopso
 from optimization.plot_pareto import plot_pareto_2d, plot_pareto_3d
-
 import yaml
 
 config_file = "optimization/config.yaml"
@@ -63,9 +62,11 @@ def plot_all(embedder, optimizer):
                 mota_list.append(float(row["MOTA"]))
                 idf1_list.append(float(row["IDF1"]))
                 fps_list.append(float(row["FPS"]))
+
+        name_prefix = f"{embedder.replace('v2','')}_{optimizer}".lower()
         plot_folder = os.path.join(results_dir, embedder, optimizer)
-        plot_pareto_2d(mota_list, fps_list, save_path=os.path.join(plot_folder, "pareto_2d.png"))
-        plot_pareto_3d(mota_list, idf1_list, fps_list, save_path=os.path.join(plot_folder, "pareto_3d.png"))
+        plot_pareto_2d(mota_list, fps_list, save_path=os.path.join(plot_folder, f"{name_prefix}_2d.png"), show=False)
+        plot_pareto_3d(mota_list, idf1_list, fps_list, save_path=os.path.join(plot_folder, f"{name_prefix}_3d.png"), show=False)
     except Exception as e:
         print(f"[!] Failed to plot {embedder} + {optimizer}: {e}")
 
@@ -78,7 +79,7 @@ def run_combo(embedder, optimizer):
     log_path = os.path.join(results_dir, embedder, optimizer, "log.csv")
 
     if optimizer == "qpso":
-        best_config = qpso_optimize(bounds, allowed_values, num_particles=20, generations=50)
+        best_config = qpso_optimize(bounds, allowed_values, num_particles=20, generations=50, log_path=log_path)
     elif optimizer == "nsga":
         best_config = run_nsga(bounds, allowed_values, num_individuals=20, generations=50, log_path=log_path)
     elif optimizer == "mopso":
