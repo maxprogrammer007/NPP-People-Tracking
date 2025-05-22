@@ -1,14 +1,9 @@
-ultralytics>=8.0.0
-opencv-python
+ultralytics==8.0.168             # YOLOv8 stable
+deep-sort-realtime>=1.3         # Tracker interface stable from 1.3
+deap>=1.3
 numpy
+pandas
+opencv-python
 matplotlib
-scikit-learn
 tqdm
 PyYAML
-
-# Required for ByteTrack
-cython
-lap
-filterpy
-torch
-torch

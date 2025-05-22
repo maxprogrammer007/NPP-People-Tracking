@@ -1,18 +1,23 @@
-# detectors/yolo_detector.py
-
 from ultralytics import YOLO
-import cv2
+import torch
 
 class YOLODetector:
-    def __init__(self, model_name="yolov8n.pt", img_size=640, conf_thresh=0.5):
+    def __init__(self, model_name="yolov8n.pt", img_size=640, conf_thresh=0.5, device=None):
         self.model = YOLO(model_name)
         self.img_size = img_size
         self.conf_thresh = conf_thresh
+        self.device = device or ('cuda' if torch.cuda.is_available() else 'cpu')
 
     def detect(self, frame):
-        results = self.model.predict(source=frame, imgsz=self.img_size, conf=self.conf_thresh, verbose=False)
-        detections = []
+        results = self.model.predict(
+            source=frame,
+            imgsz=self.img_size,
+            conf=self.conf_thresh,
+            device=self.device,
+            verbose=False
+        )
 
+        detections = []
         for result in results:
             for box in result.boxes:
                 if box.conf.item() >= self.conf_thresh:
