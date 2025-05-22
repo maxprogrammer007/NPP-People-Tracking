@@ -1,10 +1,10 @@
 {
-  "img_size": 728.953,
-  "conf_thresh": 0.318,
-  "iou_thresh": 0.586,
-  "skip_interval": 5,
-  "appearance_weight": 0.514,
-  "MOTA": 0.9,
-  "IDF1": 0.81,
-  "FPS": 29.99649917556738
+  "img_size": 515.626,
+  "conf_thresh": 0.298,
+  "iou_thresh": 0.604,
+  "skip_interval": 4.689,
+  "appearance_weight": 1.0,
+  "MOTA": 0.8,
+  "IDF1": 0.75,
+  "FPS": 36.012
 }
