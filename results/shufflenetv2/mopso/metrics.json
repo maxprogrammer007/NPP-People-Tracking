@@ -1,10 +1,10 @@
 {
-  "img_size": 640,
-  "conf_thresh": 0.5,
-  "nms_thresh": 0.45,
-  "alpha": 0.6,
-  "frame_skip": 1,
-  "MOTA": 0.95,
-  "IDF1": 0.89,
-  "FPS": 24.5
+  "img_size": 688.414,
+  "conf_thresh": 0.246,
+  "iou_thresh": 0.7,
+  "skip_interval": 3.197,
+  "appearance_weight": 0.98,
+  "MOTA": 0.8500000000000001,
+  "IDF1": 0.75,
+  "FPS": 33.944
 }
