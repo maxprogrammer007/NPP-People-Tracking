@@ -21,3 +21,4 @@ shufflenetv2,nsga,1.0,0.81,43.041
 shufflenetv2,mopso,0.8500000000000001,0.75,33.944
 resnet,qpso,1.0,0.81,41.245
 resnet,nsga,1.0,0.81,37.884
+resnet,mopso,0.8,0.75,16.844
